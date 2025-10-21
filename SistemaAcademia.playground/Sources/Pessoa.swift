@@ -5,7 +5,7 @@
 
 public class Pessoa {
     private let nome: String
-    private var email: String
+    private let email: String
     
     public init(nome: String, email: String) {
         self.nome = nome
@@ -13,7 +13,7 @@ public class Pessoa {
     }
     
     public func getDescricao() -> String {
-        let stringFormatada = nome + " " + email
+        let stringFormatada = "Nome: \(nome)\nEmail: \(email)"
         return stringFormatada
     }
 }
