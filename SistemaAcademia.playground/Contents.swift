@@ -39,3 +39,32 @@ print("Classe PlanoAnual:")
 let planoAnual: PlanoAnual = PlanoAnual()
 print(planoAnual.calcularMensalidade())
 print("--------------------------------------------")
+
+// Classe Aparelho
+print("Classe Aparelho:")
+let cadeiraFlexora: Aparelho = Aparelho(nomeItem: "Cadeira Flexora")
+print(cadeiraFlexora.realizarManutencao())
+print(cadeiraFlexora.dataUltimaManutencao)
+cadeiraFlexora.nomeItem = "Supino"
+print(cadeiraFlexora.nomeItem)
+print("--------------------------------------------")
+
+// Classe Aula
+print("Classe Aula:")
+let aulaHipertrofia: Aula = Aula(nome: "Aula de Hipertrofia", instrutor: julianoInstrutor)
+print(aulaHipertrofia.getDescricao())
+print("--------------------------------------------")
+
+// Classe AulaPersonal
+print("Classe AulaPersonal:")
+let aulaPersonal: AulaPersonal = AulaPersonal(nome: "Aula Personal", instrutor: julianoInstrutor, aluno: julianoAluno)
+print(aulaPersonal.getDescricao())
+print("--------------------------------------------")
+
+// Classe AulaColetiva
+print("Classe AulaColetiva:")
+let aulaColetiva: AulaColetiva = AulaColetiva(nome: "Aula Coletiva", instrutor: julianoInstrutor)
+print(aulaColetiva.getDescricao())
+aulaColetiva.inscrever(aluno: julianoAluno)
+print(aulaColetiva.getDescricao())
+print("--------------------------------------------")

@@ -4,7 +4,7 @@
 //
 
 public class Aluno: Pessoa {
-    private var matricula: String
+    public var matricula: String
     private var nivel: NivelAluno = .iniciante
     public private(set) var plano: Plano
     

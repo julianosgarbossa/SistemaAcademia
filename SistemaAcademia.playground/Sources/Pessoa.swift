@@ -4,7 +4,7 @@
 //
 
 public class Pessoa {
-    private let nome: String
+    public let nome: String
     private let email: String
     
     public init(nome: String, email: String) {
