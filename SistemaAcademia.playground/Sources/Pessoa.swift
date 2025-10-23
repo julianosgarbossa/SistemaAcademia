@@ -5,7 +5,7 @@
 
 public class Pessoa {
     public let nome: String
-    private let email: String
+    public let email: String
     
     public init(nome: String, email: String) {
         self.nome = nome
