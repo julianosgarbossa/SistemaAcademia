@@ -1,103 +1,58 @@
 import Foundation
 
-class Academia {
-    
-    let nome: String
-    var alunosMatriculados: [String: Aluno] = [:]
-    var instrutoresContratados: [String: Instrutor] = [:]
-    var aparelhos: [Aparelho] = []
-    var aulasDisponiveis: [Aula] = []
-    
-    init(nome: String) {
-        self.nome = nome
-    }
-    
-    func adicionarAparelho(aparelho: Aparelho) {
-        aparelhos.append(aparelho)
-    }
-    
-    func adicionarAula(aula: Aula) {
-        aulasDisponiveis.append(aula)
-    }
-    
-    func contratarInstrutor(instrutor: Instrutor) {
-        instrutoresContratados[instrutor.email] = instrutor
-    }
-    
-    func matricularAluno(aluno: Aluno) {
-        if alunosMatriculados[aluno.matricula] != nil {
-            print("Erro! Aluno com matrícula: \(aluno.matricula) já está matriculado")
-        } else {
-            alunosMatriculados[aluno.matricula] = aluno
-            print("Aluno matriculado com sucesso!")
-        }
-    }
-    
-    func matricularAluno(nome: String, email: String, matricula: String, plano: Plano) -> Aluno {
-        let novoAluno = Aluno(nome: nome, email: email, matricula: matricula, plano: plano)
-        matricularAluno(aluno: novoAluno)
-        return novoAluno
-    }
-    
-    func buscarAluno(porMatricula matricula: String) -> Aluno? {
-        return alunosMatriculados[matricula]
-    }
-    
-    func listarAlunos() {
-        print("--- Lista de Alunos Matriculados ---")
-        
-        if alunosMatriculados.isEmpty {
-            print("Nenhum aluno matriculado")
-        } else {
-            let alunosOrdenados = alunosMatriculados.values.sorted { $0.nome < $1.nome }
-            
-            for aluno in alunosOrdenados {
-                print(aluno.getDescricao())
-            }
-        }
-        
-        print("--------- Rodapé ---------")
-    }
-    
-    func listarAulas() {
-        print("--- Lista de Aulas Disponíveis ---")
-        
-        if aulasDisponiveis.isEmpty {
-            print("Nenhuma aula disponível.")
-        } else {
-            for aula in aulasDisponiveis {
-                print(aula.getDescricao())
-            }
-        }
-        
-        print("--------- Rodapé ---------")
-    }
+// ------ SIMULAÇÃO DO SISTEMA DA ACADEMIA ------
+
+let academia: Academia = Academia(nome: "Academia POO 360")
+let planoMensal: PlanoMensal = PlanoMensal()
+let planoAnual: PlanoAnual = PlanoAnual()
+let instrutor1: Instrutor = Instrutor(nome: "Renato", email: "renato@gmail.com", especialidade: "Musculação")
+let instrutor2: Instrutor = Instrutor(nome: "Rafael", email: "rafael@gmail.com", especialidade: "Funcional")
+
+academia.contratarInstrutor(instrutor: instrutor1)
+academia.contratarInstrutor(instrutor: instrutor2)
+
+let alunoJuliano: Aluno = academia.matricularAluno(nome: "Juliano", email: "juliano@gmail.com", matricula: "2025001", plano: planoMensal)
+let alunaJanile: Aluno = academia.matricularAluno(nome: "Janile", email: "janile@gmail.com", matricula: "2025002", plano: planoAnual)
+
+let aulaPersonal: AulaPersonal = AulaPersonal(nome: "Aula Musculação", instrutor: instrutor1, aluno: alunoJuliano)
+let aulaColetiva: AulaColetiva = AulaColetiva(nome: "Aula Funcional", instrutor: instrutor2, capacidadeMaxima: 3)
+
+academia.adicionarAula(aula: aulaPersonal)
+academia.adicionarAula(aula: aulaColetiva)
+
+aulaColetiva.inscrever(aluno: alunoJuliano)
+aulaColetiva.inscrever(aluno: alunaJanile)
+
+let alunaPaula: Aluno = academia.matricularAluno(nome: "Paula", email: "paula@gmail.com", matricula: "2025003", plano: planoMensal)
+
+aulaColetiva.inscrever(aluno: alunaPaula)
+
+let alunaAlana: Aluno = academia.matricularAluno(nome: "Alana", email: "alana@gmail.com", matricula: "2025004", plano: planoAnual)
+
+aulaColetiva.inscrever(aluno: alunaAlana)
+
+academia.listarAulas()
+academia.listarAlunos()
+
+let todasAsAulas: [Aula] = [aulaPersonal, aulaColetiva]
+
+for aula in todasAsAulas {
+    print(aula.getDescricao())
 }
 
+let todasAsPessoa: [Pessoa] = [alunoJuliano, instrutor1, alunaJanile, instrutor2]
 
-// ------ TESTE DA CLASSE ACADEMIA ------
+for pessoa in todasAsPessoa {
+    print(pessoa.getDescricao())
+}
 
-// 1. Criar a academia
-let academia = Academia(nome: "SmartFit")
-print("Academia \(academia.nome) criada!\n")
+let relatorio = academia.gerarRelatorio()
+print("-------- Relatório --------")
+print("Alunos Matriculados: \(relatorio.totalAlunos)")
+print("Instrutores Contratados: \(relatorio.totalInstrutores)")
+print("Aulas Disponíveis: \(relatorio.totalAulas)")
 
-// 2. Adicionar aparelhos
-let aparelho1 = Aparelho(nomeItem: "Esteira")
-let aparelho2 = Aparelho(nomeItem: "Supino")
-let aparelho3 = Aparelho(nomeItem: "Leg Press")
 
-academia.adicionarAparelho(aparelho: aparelho1)
-academia.adicionarAparelho(aparelho: aparelho2)
-academia.adicionarAparelho(aparelho: aparelho3)
-print("Lista de Aparelhos:")
-print("\(academia.aparelhos[0].nomeItem)")
-print("\(academia.aparelhos[1].nomeItem)")
-print("\(academia.aparelhos[2].nomeItem)\n")
 
-// 2. Adicionar aulas
-let instrutor = Instrutor(nome: "Renato Cariani", email: "renatocariani@gmail.com", especialidade: "Hipertrofia")
-let plano = PlanoMensal()
-let aluno = Aluno(nome: "Juliano Sgarbossa", email: "julianosgarbossa@gmail.com", matricula: "Paga", plano: plano)
-let aula1 = AulaPersonal(nome: "Aula Hipertrofia Personal", instrutor: instrutor, aluno: aluno)
-academia.adicionarAula(aula: aula1)
-academia.listarAulas()
+
+
